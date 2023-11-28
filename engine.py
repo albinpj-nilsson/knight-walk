@@ -73,13 +73,15 @@ class Chessboard:
         Returns:
             valid_moves: List of valid coordinates
         """
-        pass
+        position =
+        if :
+
 
     def compute_longest_route():
         """Computes the longest route for knight.
 
         Args:
-            str1 (str): The string to be reversed
+
 
         Returns:
             longest_route: List of positions in order of the path
