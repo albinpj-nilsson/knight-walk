@@ -44,7 +44,7 @@ class Chessboard:
     Attributes: ...
     """
     def __init__(self):
-        """Initializes the instance based on ...
+        """Initializes the instance based on moves a knight can take ...
 
         Args:
             str1 (str): The string to be reversed
@@ -52,7 +52,7 @@ class Chessboard:
         Returns:
             reverse(str1): The string which gets reversed
         """
-        pass
+        self.moves = [(-1, -2), (-1, 2), (1, 2), (1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1)]
     def create_board(self):
         """Iterates across the window and to create instances for the Square class
 

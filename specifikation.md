@@ -11,6 +11,18 @@ Wikipediasidan: https://en.wikipedia.org/wiki/Knight%27s_tour
 
 # Användarscenarier
 
+Här klistrar jag in extrauppgifterna eftersom jag siktar på A.
+
+Extrauppgift, betyg C: Ge användaren möjlighet att mata in en egen springarvandring.
+Kontrollera att inmatade koordinater motsvarar en tillåten ruta.
+
+Extrauppgift, betyg B: Programmet ska uppdatera en ”high-score-fil” mellan körningarna.
+Textfilen läses in vid programstart. Om körningen resulterade i fler steg än det hittills
+största, som är lagrat i textfilen, ska det nya antalet steg lagras på textfilen.
+
+Extrauppgift, betyg A: Ge programmet en snyggare presentation genom att visa resultatet
+i ett separat grafikfönster. Låt användaren få se ett steg i taget.
+
 
 
 # Kodskelett
@@ -59,7 +71,7 @@ class Chessboard:
         Returns:
             reverse(str1): The string which gets reversed
         """
-        pass
+        self.moves = [(-1,-2),(-1,2),(1,2),(1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
     def create_board(self):
         """Iterates across the window and to create instances for the Square class
 
