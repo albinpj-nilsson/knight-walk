@@ -15,7 +15,82 @@ Wikipediasidan: https://en.wikipedia.org/wiki/Knight%27s_tour
 
 # Kodskelett
 
-```
-class Shackbräde():
+```python
+class Square:
+    """Defines logic for a checkboard square
+
+    Attributes: ...
+    """
+
+    def __init__(self):
+        """Initializes the instance based on ...
+
+        Args:
+            str1 (str): The string to be reversed
+
+        Returns:
+            reverse(str1): The string which gets reversed
+        """
+        pass
+
+    def click_event(self):
+        """Updates a square when pressed
+
+        Parameters:
+            str1 (str): The string to be reversed
+
+        Returns:
+            reverse(str1): The string which gets reversed
+        """
+        pass
+
+
+class Chessboard:
+    """Builds functions for the chessboard and game logic
+
+    Attributes: ...
+    """
+    def __init__(self):
+        """Initializes the instance based on ...
+
+        Args:
+            str1 (str): The string to be reversed
+
+        Returns:
+            reverse(str1): The string which gets reversed
+        """
+        pass
+    def create_board(self):
+        """Iterates across the window and to create instances for the Square class
+
+        Args:
+            str1 (str): The string to be reversed
+
+        Returns:
+            reverse(str1): The string which gets reversed
+        """
+        pass
+
+    def valid_moves(self, position):
+        """Calculates valid moves based on current position.
+
+        Args:
+            str1 (str): The string to be reversed
+
+        Returns:
+            valid_moves: List of valid coordinates
+        """
+        pass
+    
+    def compute_longest_route():
+        """Computes the longest route for knight.
+
+        Args:
+            str1 (str): The string to be reversed
+
+        Returns:
+            longest_route: List of positions in order of the path
+            """
+        pass
     
 ```

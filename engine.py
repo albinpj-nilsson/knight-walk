@@ -73,6 +73,8 @@ class Chessboard:
         Returns:
             valid_moves: List of valid coordinates
         """
+        pass
+
     def compute_longest_route():
         """Computes the longest route for knight.
 
@@ -82,3 +84,4 @@ class Chessboard:
         Returns:
             longest_route: List of positions in order of the path
         """
+        pass
