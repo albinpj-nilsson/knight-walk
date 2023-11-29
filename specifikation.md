@@ -75,3 +75,7 @@ def save_high_score(steps):
         None
     """
 ```
+
+# Minnet
+
+[Se LåP](LåP Knight Walk.pdf)
