@@ -18,81 +18,60 @@ Ett annat användarscenario är för att undervisa om schackstrategi och taktik 
 # Kodskelett
 
 ```python
-class Square:
-    """Defines logic for a checkboard square
-
-    Attributes: ...
-    """
-
-    def __init__(self):
-        """Initializes the instance based on ...
-
-        Args:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
-        """
-        pass
-
-    def click_event(self): # Kanske uppdatera
-        """Updates a square when pressed
-
-        Parameters:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
-        """
-        pass
-
-
 class Chessboard:
-    """Builds functions for the chessboard and game logic
+    """Builds functions for the chessboard and game logic for how the knight moves upon it.
 
-    Attributes: 
+    Attributes:
+        board
+
     """
     def __init__(self):
-        """Initializes the instance based on ...
+        """Initializes the instance by creating a chessboard as a nested list of integers
 
         Args:
-            str1 (str): The string to be reversed
+            board (list): 12x12 matrix filled with empty spaces for "real 8x8 board", while squares outside of this are set to -1
 
         Returns:
-            reverse(str1): The string which gets reversed
+            None
         """
-        self.moves = [(-1,-2),(-1,2),(1,2),(1,-2),(2,1),(2,-1),(-2,1),(-2,-1)]
-    def create_board(self):
-        """Iterates across the window and to create instances for the Square class
-
-        Args:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
+    def print_board(self):
+        """Prints chessboard to terminal by iterating through board
         """
         pass
 
-    def valid_moves(self, position):
-        """Calculates valid moves based on current position.
+    def valid_moves(self, row, column):
+        """Calculates valid moves based on current position and board characteristics.
 
         Args:
-            position: Current position of knight
-            
+            row (int): Input row
+            column (int): Input column
+
         Returns:
-            valid_moves: List of valid coordinates
+            moves (list): List of valid moves computed from input position
+        """
+        step = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+        pass
+    def move_knight(self, start_row, start_column):
+        """Moves the knight by checking that the move is valid, and ticks up a move counter.
+        Alters board by adding this move counter to corresponding position.
+
+        Args:
+            start_row (int): Input row
+            start_column (int): Input column
+
+        Returns:
+            None
         """
         pass
-    
-    def compute_longest_route():
-        """Computes the longest route for knight.
 
-        Args:
-            str1 (str): The string to be reversed
 
-        Returns:
-            longest_route: List of positions in order of the path
-            """
-        pass
-    
+def save_high_score(steps):
+    """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
+
+    Args:
+        steps (int): The max number of steps from one knight walk in main program
+
+    Returns:
+        None
+    """
 ```
