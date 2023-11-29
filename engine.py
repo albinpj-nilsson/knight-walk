@@ -6,84 +6,60 @@ __author__ = "Albin Nilsson"
 __copyright__ = "Copyright 2023, Kth"
 __license__ = "CC0"
 
-from tkinter import *
-
-# Classes for the game
-class Square:
-    """Defines logic for a checkboard square
-
-    Attributes: ...
-    """
-
-    def __init__(self):
-        """Initializes the instance based on ...
-
-        Args:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
-        """
-        pass
-
-    def click_event(self):
-        """Updates a square when pressed
-
-        Parameters:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
-        """
-        pass
-
-
+import random
 class Chessboard:
-    """Builds functions for the chessboard and game logic
+    """Builds functions for the chessboard and game logic for how the knight moves upon it.
 
-    Attributes: ...
+    Attributes:
+        board
+
     """
     def __init__(self):
-        """Initializes the instance based on moves a knight can take ...
+        """Initializes the instance by creating a chessboard as a nested list of integers
 
         Args:
-            str1 (str): The string to be reversed
+            board (list): 12x12 matrix filled with empty spaces for "real 8x8 board", while squares outside of this are set to -1
 
         Returns:
-            reverse(str1): The string which gets reversed
+            None
         """
-        self.moves = [(-1, -2), (-1, 2), (1, 2), (1, -2), (2, 1), (2, -1), (-2, 1), (-2, -1)]
-    def create_board(self):
-        """Iterates across the window and to create instances for the Square class
-
-        Args:
-            str1 (str): The string to be reversed
-
-        Returns:
-            reverse(str1): The string which gets reversed
+    def print_board(self):
+        """Prints chessboard to terminal by iterating through board
         """
         pass
 
-    def valid_moves(self, position):
-        """Calculates valid moves based on current position.
+    def valid_moves(self, row, column):
+        """Calculates valid moves based on current position and board characteristics.
 
         Args:
-            str1 (str): The string to be reversed
+            row (int): Input row
+            column (int): Input column
 
         Returns:
-            valid_moves: List of valid coordinates
+            moves (list): List of valid moves computed from input position
         """
-        position =
-        if :
-
-
-    def compute_longest_route():
-        """Computes the longest route for knight.
+        step = [(-2, -1), (-2, 1), (-1, -2), (-1, 2), (1, -2), (1, 2), (2, -1), (2, 1)]
+        pass
+    def move_knight(self, start_row, start_column):
+        """Moves the knight by checking that the move is valid, and ticks up a move counter.
+        Alters board by adding this move counter to corresponding position.
 
         Args:
-
+            start_row (int): Input row
+            start_column (int): Input column
 
         Returns:
-            longest_route: List of positions in order of the path
+            None
         """
         pass
+
+
+def save_high_score(steps):
+    """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
+
+    Args:
+        steps (int): The max number of steps from one knight walk in main program
+
+    Returns:
+        None
+    """
