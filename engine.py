@@ -99,26 +99,28 @@ class Chessboard:
 
             start_row, start_column = chosen_move # The chosen move becomes input for the next loop
 
-
-
-
-
-
-
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
 
     Args:
-        steps (int): The max number of steps from one knight walk in main program
+        steps (int): The number of steps from one knight walk in main program
 
     Returns:
         None
     """
-    pass
+    try:
+        with open("high_score.txt", "r") as file:
+            high_score = int(file.read().strip())
+    except FileNotFoundError:
+        high_score = float('inf')
+
+    if steps > high_score:
+        with open("high_score.txt", "w") as file:
+            file.write(str(steps))
 
 if __name__ == "__main__":
     chessboard = Chessboard()
-    chessboard.print_board()
+    chessboard.print_board() # User gets an overview of the chessboard before making a choice
 
     while True: # User input must be valid
         start_position = input("Type your starting square (e.g., E4): ")
@@ -131,4 +133,9 @@ if __name__ == "__main__":
             print("Invalid starting position. Please try again.")
 
     chessboard.move_knight(start_row, start_column)
-    chessboard.print_board()
+    chessboard.print_board() # The user is shown the result of their choice
+
+    max_number_of_steps = max(max(row) for row in chessboard.board)
+    print(f"The knight took {max_number_of_steps} steps before it could not walk to any new squares!")
+
+    save_high_score(max_number_of_steps)
