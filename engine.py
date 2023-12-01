@@ -32,8 +32,8 @@ class Chessboard:
     def print_board(self):
         """Prints chessboard to terminal by iterating through board
         """
-        print("--------------------------------------------------")
-        print("|    -----------------------------------------   |")
+        print("---------------------------------------------------")
+        print("|    -----------------------------------------    |")
         for r in range(9, 1, -1): # Iterate backwards to get chessboard row numbers right
             print(f"|{r-1}   |",end="") # Adds row numbers for each row
             for c in range(2, 10):
@@ -46,10 +46,10 @@ class Chessboard:
                 print(f"{' ' * (spaces_to_add // 2)}{value_str}{' ' * (spaces_to_add - spaces_to_add // 2)}|", end="") # Prints squares where
                 # knight has not been as spaces and all other squares as the number of the matrix position
                 if c == 9: # Add rightmost board edge when loop reaches last column
-                    print("   |")
-            print("|    -----------------------------------------   |") # Adds lines between rows
-        print("|       A    B    C    D    E    F    G    H     |")
-        print("--------------------------------------------------")
+                    print("    |")
+            print("|    -----------------------------------------    |") # Adds lines between rows
+        print("|       A    B    C    D    E    F    G    H      |")
+        print("---------------------------------------------------")
 
 
     def valid_moves(self, current_row, current_col):
