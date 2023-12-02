@@ -73,7 +73,7 @@ class Chessboard:
 
 
 
-    def move_knight(self, start_row, start_column):
+    def move_knight_random(self, start_row, start_column):
         """Moves the knight by checking that the move is valid, and ticks up a move counter.
         Alters board by adding this move counter to corresponding position.
 
@@ -88,16 +88,40 @@ class Chessboard:
         self.board[start_row][start_column] = move_number # We represent the squares the knight has visited with its number
 
         while True:
-            moves = self.valid_moves(start_row, start_column)
+            valid_moves = self.valid_moves(start_row, start_column)
 
-            if not moves:
+            if not valid_moves:
                 break # Exit loop when there are no more valid squares to visit
 
-            chosen_move = random.choice(moves) # Randomly chooses a move
+            chosen_move = random.choice(valid_moves) # Randomly chooses a move from permitted moves
             move_number += 1
             self.board[chosen_move[0]][chosen_move[1]] = move_number
 
             start_row, start_column = chosen_move # The chosen move becomes input for the next loop
+
+    def move_knight_user_input(self, sequence_of_moves):
+        """Moves the knight based on a sequence of moves given by user, given sequence is valid.
+
+        Args:
+            sequence_of_moves (list):
+
+        Returns:
+            None"""
+        move_number = 1
+        start_row, start_column = sequence_of_moves[0]
+        self.board[start_row][start_column] = move_number # Append first move
+
+        for move in sequence_of_moves[1:]:
+            valid_next_moves = self.valid_moves(start_row, start_column) # Condition for next move in sequence
+            if move in valid_next_moves:
+                move_number += 1
+                start_row, start_column = move
+                self.board[start_row][start_column] = move_number
+            else:
+                print(f"Invalid move: {move}")
+                break
+
+        print("Move sequence completed.")
 
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
@@ -123,19 +147,36 @@ if __name__ == "__main__":
     chessboard.print_board() # User gets an overview of the chessboard before making a choice
 
     while True: # User input must be valid
-        start_position = input("Type your starting square (e.g., E4): ")
-        start_column = ord(start_position[0].upper()) - ord('A') + 2
-        start_row = int(start_position[1]) + 1
+        choice = input("\n1: Random Walk"
+                       "\n2: Input Own Knight's Walk"
+                       "\n Choose an option: ")
 
-        if 2 <= start_row <= 9 and 2 <= start_column <= 9:
+        if choice == "1":
+            start_position = input("Type your starting square (e.g., E4): ")
+            start_column = ord(start_position[0].upper()) - ord('A') + 2
+            start_row = int(start_position[1]) + 1
+
+            chessboard.move_knight_random(start_row, start_column)
             break
-        else:
-            print("Invalid starting position. Please try again.")
 
-    chessboard.move_knight(start_row, start_column)
+
+        elif choice == "2":
+            move_sequence = []
+            while True:
+                next_move = input("Enter next move (e.g., D2) or type 'DONE' to finish: ")
+                if next_move.upper() == "DONE":
+                    chessboard.move_knight_user_input(move_sequence)
+                    break
+                move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
+
+
+        else:
+            print("Invalid choice. Please enter 1 or 2.")
+
+
     chessboard.print_board() # The user is shown the result of their choice
 
     max_number_of_steps = max(max(row) for row in chessboard.board)
-    print(f"The knight took {max_number_of_steps} steps before it could not walk to any new squares!")
+    print(f"The knight took {max_number_of_steps} steps before stopping!")
 
     save_high_score(max_number_of_steps)
