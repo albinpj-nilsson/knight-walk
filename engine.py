@@ -109,19 +109,17 @@ class Chessboard:
             None"""
         move_number = 1
         start_row, start_column = sequence_of_moves[0]
-        self.board[start_row][start_column] = move_number # Append first move
+        self.board[start_row][start_column] = move_number  # Map the first move
 
-        for move in sequence_of_moves[1:]:
-            valid_next_moves = self.valid_moves(start_row, start_column) # Condition for next move in sequence
-            if move in valid_next_moves:
+        for i in range(len(sequence_of_moves[1:])):
+            valid_next_moves = self.valid_moves(start_row, start_column)
+            if sequence_of_moves[i + 1] in valid_next_moves:
                 move_number += 1
-                start_row, start_column = move
+                start_row, start_column = sequence_of_moves[i + 1]  # Update to the next move
                 self.board[start_row][start_column] = move_number
             else:
-                print(f"Invalid move: {move}")
+                print(f"Invalid move: {sequence_of_moves[i + 1]}")
                 break
-
-        print("Move sequence completed.")
 
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
@@ -168,8 +166,7 @@ if __name__ == "__main__":
                     chessboard.move_knight_user_input(move_sequence)
                     break
                 move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
-
-
+            break
         else:
             print("Invalid choice. Please enter 1 or 2.")
 
