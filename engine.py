@@ -137,10 +137,11 @@ def save_high_score(steps):
         high_score = float('inf')
 
     if steps > high_score:
+        print(f"New high score! {steps} steps is higher than the previous high score of {high_score} steps.")
         with open("high_score.txt", "w") as file:
             file.write(str(steps))
 
-if __name__ == "__main__":
+def main():
     chessboard = Chessboard()
     chessboard.print_board() # User gets an overview of the chessboard before making a choice
 
@@ -177,3 +178,8 @@ if __name__ == "__main__":
     print(f"The knight took {max_number_of_steps} steps before stopping!")
 
     save_high_score(max_number_of_steps)
+
+
+if __name__ == "__main__": # Execute when the module is not initialized from an import statement
+    main()
+
