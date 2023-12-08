@@ -1,5 +1,4 @@
-"""I create the engine for the game reliant upon tkinter. Google style docstrings,
-see e.g. https://github.com/google/styleguide/blob/gh-pages/pyguide.md#38-comments-and-docstrings
+"""From the engine I build a GUI here using Tkinter.
 """
 
 __author__ = "Albin Nilsson"
@@ -7,7 +6,7 @@ __copyright__ = "Copyright 2023, Kth"
 __license__ = "CC0"
 
 import random
-
+import tkinter
 class Chessboard:
     """Builds functions for the chessboard and game logic for how the knight moves upon it.
 
@@ -123,6 +122,8 @@ class Chessboard:
                 break
 
 class GUI:
+    root = tkinter.Tk()
+    mylabel = tkinter.Label(root, text="Hello world!")
 
 
 def save_high_score(steps):
