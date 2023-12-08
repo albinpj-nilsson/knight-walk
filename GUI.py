@@ -159,7 +159,7 @@ class ChessboardGUI:
             None
         """
         self.master = master
-        self.master.title("Knight's Tour Chessboard")
+        self.master.title("Knight's Tour")
         self.chessboard = Chessboard()
 
         self.create_widgets()
@@ -170,7 +170,16 @@ class ChessboardGUI:
         Returns:
             None
         """
-        # ...
+        self.board_frame = ttk.Frame(self.master)
+        self.board_frame.grid(row=0, column=0, padx=10, pady=10)
+        self.canvas = tk.Canvas(self.board_frame, width=400, height=400)
+        self.canvas.pack()
+        self.draw_chessboard()
+
+        self.control_frame = ttk.Frame(self.master)
+        self.control_frame.grid(row=0, column=1, padx=10, pady=10)
+        ttk.Button(self.control_frame, text="Random Walk", command=self.start_random_walk).pack(pady=5)
+        ttk.Button(self.control_frame, text="Input Own Walk", command=self.start_user_input).pack(pady=5)
 
     def draw_chessboard(self):
         """Draws the chessboard on the canvas.
@@ -178,7 +187,12 @@ class ChessboardGUI:
         Returns:
             None
         """
-        # ...
+        for row in range(8):
+            for col in range(8):
+                x0, y0 = col * 50, row * 50
+                x1, y1 = x0 + 50, y0 + 50
+                color = "#eeeed2" if (row + col) % 2 == 0 else "#769656"
+                self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
 
     def start_random_walk(self):
         """Starts a random walk of the knight on the chessboard.
@@ -211,7 +225,9 @@ def main():
     Returns:
         None
     """
-    # ...
+    root = tk.Tk()
+    app = ChessboardGUI(root)
+    root.mainloop()
 
 if __name__ == "__main__":
     main()
