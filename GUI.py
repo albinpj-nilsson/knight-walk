@@ -1,6 +1,3 @@
-"""From the engine I build a GUI here using Tkinter.
-"""
-
 
 __author__ = "Albin Nilsson"
 __copyright__ = "Copyright 2023, Kth"
@@ -124,15 +121,6 @@ class Chessboard:
                 print(f"Invalid move: {sequence_of_moves[i + 1]}")
                 break
 
-class ChessboardGUI:
-    def __init__(self, master):
-        self.master = master
-        self.master.title("Knight's Tour Chessboard")
-        self.chessboard = Chessboard()
-
-        self.create_widgets()
-
-
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
 
@@ -153,46 +141,73 @@ def save_high_score(steps):
         with open("high_score.txt", "w") as file:
             file.write(str(steps))
 
+class ChessboardGUI:
+    """Creates a GUI for the chessboard and knight's tour.
+
+    Attributes:
+        master (tk.Tk): The main window of the GUI.
+        chessboard (Chessboard): The instance of the Chessboard class.
+
+    """
+    def __init__(self, master):
+        """Initializes the ChessboardGUI.
+
+        Args:
+            master (tk.Tk): The main window of the GUI.
+
+        Returns:
+            None
+        """
+        # ...
+
+    def create_widgets(self):
+        """Creates widgets for the GUI.
+
+        Returns:
+            None
+        """
+        # ...
+
+    def draw_chessboard(self):
+        """Draws the chessboard on the canvas.
+
+        Returns:
+            None
+        """
+        # ...
+
+    def start_random_walk(self):
+        """Starts a random walk of the knight on the chessboard.
+
+        Returns:
+            None
+        """
+        # ...
+
+    def start_user_input(self):
+        """Starts a knight's tour based on the user's input.
+
+        Returns:
+            None
+        """
+        # ...
+
+    def draw_knight_path(self):
+        """Draws the knight's path on the canvas.
+
+        Returns:
+            None
+        """
+        # ...
+
+
 def main():
-    chessboard = Chessboard()
-    chessboard.print_board() # User gets an overview of the chessboard before making a choice
+    """The main function that initializes the chessboard and runs the GUI.
 
-    while True: # User input must be valid
-        choice = input("\n1: Random Walk"
-                       "\n2: Input Own Knight's Walk"
-                       "\n Choose an option: ")
+    Returns:
+        None
+    """
+    # ...
 
-        if choice == "1":
-            start_position = input("Type your starting square (e.g., E4): ")
-            start_column = ord(start_position[0].upper()) - ord('A') + 2
-            start_row = int(start_position[1]) + 1
-
-            chessboard.move_knight_random(start_row, start_column)
-            break
-
-
-        elif choice == "2":
-            move_sequence = []
-            while True:
-                next_move = input("Enter next move (e.g., D2) or type 'DONE' to finish: ")
-                if next_move.upper() == "DONE":
-                    chessboard.move_knight_user_input(move_sequence)
-                    break
-                move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
-            break
-        else:
-            print("Invalid choice. Please enter 1 or 2.")
-
-
-    chessboard.print_board() # The user is shown the result of their choice
-
-    max_number_of_steps = max(max(row) for row in chessboard.board)
-    print(f"The knight took {max_number_of_steps} steps before stopping!")
-
-    save_high_score(max_number_of_steps)
-
-
-if __name__ == "__main__": # Execute when the module is not initialized from an import statement
+if __name__ == "__main__":
     main()
-
-
