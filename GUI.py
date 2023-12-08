@@ -7,6 +7,8 @@ __copyright__ = "Copyright 2023, Kth"
 __license__ = "CC0"
 
 import random
+import tkinter as tk
+from tkinter import ttk
 
 class Chessboard:
     """Builds functions for the chessboard and game logic for how the knight moves upon it.
@@ -122,7 +124,13 @@ class Chessboard:
                 print(f"Invalid move: {sequence_of_moves[i + 1]}")
                 break
 
-class GUI:
+class ChessboardGUI:
+    def __init__(self, master):
+        self.master = master
+        self.master.title("Knight's Tour Chessboard")
+        self.chessboard = Chessboard()
+
+        self.create_widgets()
 
 
 def save_high_score(steps):
