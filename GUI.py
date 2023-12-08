@@ -158,7 +158,11 @@ class ChessboardGUI:
         Returns:
             None
         """
-        # ...
+        self.master = master
+        self.master.title("Knight's Tour Chessboard")
+        self.chessboard = Chessboard()
+
+        self.create_widgets()
 
     def create_widgets(self):
         """Creates widgets for the GUI.
