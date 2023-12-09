@@ -214,7 +214,14 @@ class ChessboardGUI:
         Returns:
             None
         """
-        # ...
+        move_sequence = []
+        while True:
+            next_move = input("Enter next move (e.g., D2) or type 'DONE' to finish: ")
+            if next_move.upper() == "DONE":
+                self.chessboard.move_knight_user_input(move_sequence)
+                self.draw_knight_path()
+                break
+            move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
 
     def draw_knight_path(self):
         """Draws the knight's path on the canvas.
