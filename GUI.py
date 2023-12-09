@@ -85,36 +85,37 @@ class Chessboard:
                 update_callback(self.board)  # Call the callback function to update the GUI
                 time.sleep(0.3)  # Introduce a 0.3-second delay
 
-    def move_knight_user_input(self, sequence_of_moves, update_callback=None):
-        """Moves the knight based on a sequence of moves given by user, given sequence is valid.
-
-        Args:
-            sequence_of_moves (list): A list of moves given by user
-            update_callback (callable): Callback function to update the GUI after each step.
-
-        Returns:
-            None"""
-        self.__init__()  # Clean board before proceeding
+    def move_knight_user_input(self, chosen_move_row, chosen_move_column, update_callback=None):
         move_number = 1
-        start_row, start_column = sequence_of_moves[0]
-        self.board[start_row][start_column] = move_number  # Map the first move
+        self.board[chosen_move_row][chosen_move_column] = move_number
+        if update_callback:
+            update_callback(self.board)
+            time.sleep(0.3)
 
-        for i in range(len(sequence_of_moves[1:])):
-            valid_next_moves = self.valid_moves(start_row, start_column)
-            if sequence_of_moves[i + 1] in valid_next_moves:
-                move_number += 1
-                start_row, start_column = sequence_of_moves[i + 1]  # Update to the next move
-                self.board[start_row][start_column] = move_number
+        while True:
+            valid_moves = self.valid_moves(chosen_move_row, chosen_move_column)
 
-                if update_callback:
-                    update_callback(self.board)  # Call the callback function to update the GUI
-                    time.sleep(0.3)  # Introduce a 0.3-second delay
-            else:
-                translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
-                print(f"Invalid move: {translated}")
+            if not valid_moves:
                 break
 
+            input_text = yield  # Wait for user input
+            if not self.is_valid_square(input_text):
+                break
 
+            chosen_move_row = int(input_text[1]) + 1
+            chosen_move_column = ord(input_text[0].upper()) - ord('A') + 2
+
+            if (chosen_move_row, chosen_move_column) in valid_moves:
+                move_number += 1
+                self.board[chosen_move_row][chosen_move_column] = move_number
+                if update_callback:
+                    update_callback(self.board)
+                    time.sleep(0.3)
+            else:
+                break
+
+#translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
+               # print(f"Invalid move: {translated}")
 
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
@@ -213,30 +214,32 @@ class ChessboardGUI:
                     self.canvas.create_text(x + 25, y + 25, text=str(board[r][c]),
                                             font=("Helvetica", 10, "bold"), tags="knight")
         self.master.update()
-    def start_random_walk(self):
-        """Starts a random walk of the knight on the chessboard. Based off of main in engine.
 
-        Returns:
-            None
-        """
-        start_position = input("Type your starting square (e.g., E4): ")
-        start_column = ord(start_position[0].upper()) - ord('A') + 2
+    def start_random_walk(self):
+        self.canvas.delete("knight")  # Reset board
+        self.create_input_entry("Random Walk", self.handle_random_walk)
+
+    def start_user_input(self):
+        self.canvas.delete("knight")  # Reset board
+        self.create_input_entry("Input Own Walk", self.handle_random_walk)
+
+    def create_input_entry(self, button_text, button_command):
+        input_frame = ttk.Frame(self.master)
+        input_frame.grid(row=0, column=2, padx=5, pady=5)
+        ttk.Label(input_frame, text=f"Enter moves for {button_text}:").pack(pady=5)
+        input_entry = tk.Entry(input_frame)
+        input_entry.pack(pady=5)
+        submit_button = ttk.Button(input_frame, text="Submit", command=lambda: button_command(input_entry.get()))
+        submit_button.pack(pady=5)
+
+    def handle_random_walk(self, input_text):
+        start_position = input_text.upper()
+        start_column = ord(start_position[0]) - ord('A') + 2
         start_row = int(start_position[1]) + 1
         self.chessboard.move_knight_random(start_row, start_column, self.update_board)
 
-    def start_user_input(self):
-        """Starts a knight's tour based on the user's input.
-
-        Returns:
-            None
-        """
-        move_sequence = []
-        while True:
-            next_move = input("Enter next move (e.g., D2) or type 'DONE' to finish: ")
-            if next_move.upper() == "DONE":
-                self.chessboard.move_knight_user_input(move_sequence, self.update_board)
-                break
-            move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
+    def handle_user_input(self, input_text):
+        pass
 
     def draw_knight_path(self):
         """Draws the knight's path on the canvas.
@@ -244,8 +247,6 @@ class ChessboardGUI:
         Returns:
             None
         """
-        self.canvas.delete("knight") # Reset board
-
         for r in range(2, 10):
             for c in range(2, 10):
                 if self.chessboard.board[r][c] != 0:
