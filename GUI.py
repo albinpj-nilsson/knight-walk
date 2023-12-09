@@ -1,3 +1,5 @@
+"""From the engine I build a GUI here using Tkinter.
+"""
 
 __author__ = "Albin Nilsson"
 __copyright__ = "Copyright 2023, Kth"
@@ -195,12 +197,16 @@ class ChessboardGUI:
                 self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
 
     def start_random_walk(self):
-        """Starts a random walk of the knight on the chessboard.
+        """Starts a random walk of the knight on the chessboard. Based off of main in engine.
 
         Returns:
             None
         """
-        # ...
+        start_position = input("Type your starting square (e.g., E4): ")
+        start_column = ord(start_position[0].upper()) - ord('A') + 2
+        start_row = int(start_position[1]) + 1
+        self.chessboard.move_knight_random(start_row, start_column)
+        self.draw_knight_path()
 
     def start_user_input(self):
         """Starts a knight's tour based on the user's input.
