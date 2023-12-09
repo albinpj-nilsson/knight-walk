@@ -196,6 +196,13 @@ class ChessboardGUI:
                 color = "#eeeed2" if (row + col) % 2 == 0 else "#769656"
                 self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
 
+                # Display row numbers and column names
+                if col == -1:
+                    self.canvas.create_text(x0 + 25, y0 + 25, text=str(8 - row), font=("Helvetica", 10, "bold"))
+                if row == 7:
+                    col_name = chr(ord('A') + col)
+                    self.canvas.create_text(x0 + 25, y0 + 25, text=col_name, font=("Helvetica", 10, "bold"))
+
     def start_random_walk(self):
         """Starts a random walk of the knight on the chessboard. Based off of main in engine.
 
@@ -229,7 +236,13 @@ class ChessboardGUI:
         Returns:
             None
         """
-        # ...
+        self.canvas.delete("knight")
+        for r in range(2, 10):
+            for c in range(2, 10):
+                if self.chessboard.board[r][c] != 0:
+                    x, y = (c - 2) * 50, (r - 2) * 50
+                    self.canvas.create_text(x + 25, y + 25, text=str(self.chessboard.board[r][c]),
+                                            font=("Helvetica", 10, "bold"), tags="knight")
 
 
 def main():
