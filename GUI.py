@@ -60,6 +60,7 @@ class Chessboard:
         Args:
             start_row (int): Input row
             start_column (int): Input column
+            update_callback (callable): Callback function to update the GUI after each step.
 
         Returns:
             None
@@ -88,7 +89,8 @@ class Chessboard:
         """Moves the knight based on a sequence of moves given by user, given sequence is valid.
 
         Args:
-            sequence_of_moves (list):
+            sequence_of_moves (list): A list of moves given by user
+            update_callback (callable): Callback function to update the GUI after each step.
 
         Returns:
             None"""
