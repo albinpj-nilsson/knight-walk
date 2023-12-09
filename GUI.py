@@ -110,7 +110,8 @@ class Chessboard:
                     update_callback(self.board)  # Call the callback function to update the GUI
                     time.sleep(0.3)  # Introduce a 0.3-second delay
             else:
-                print(f"Invalid move: {sequence_of_moves[i + 1]}")
+                translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
+                print(f"Invalid move: {translated}")
                 break
 
 

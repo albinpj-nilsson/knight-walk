@@ -119,7 +119,8 @@ class Chessboard:
                 start_row, start_column = sequence_of_moves[i + 1]  # Update to the next move
                 self.board[start_row][start_column] = move_number
             else:
-                print(f"Invalid move: {sequence_of_moves[i + 1]}")
+                translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
+                print(f"Invalid move: {translated}")
                 break
 
 def save_high_score(steps):
