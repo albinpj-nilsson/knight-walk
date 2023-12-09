@@ -31,29 +31,6 @@ class Chessboard:
             for c in range(2, 10):
                 self.board[r][c] = 0
 
-    def print_board(self):
-        """Prints chessboard to terminal by iterating through board
-        """
-        print("---------------------------------------------------")
-        print("|    -----------------------------------------    |")
-        for r in range(9, 1, -1): # Iterate backwards to get chessboard row numbers right
-            print(f"|{r-1}   |",end="") # Adds row numbers for each row
-            for c in range(2, 10):
-                square_value = self.board[r][c]
-                if square_value == 0:
-                    value_str = " "
-                else:
-                    value_str = str(square_value)
-                spaces_to_add = 4 - len(value_str)
-                print(f"{' ' * (spaces_to_add // 2)}{value_str}{' ' * (spaces_to_add - spaces_to_add // 2)}|", end="") # Prints squares where
-                # knight has not been as spaces and all other squares as the number of the matrix position
-                if c == 9: # Add rightmost board edge when loop reaches last column
-                    print("    |")
-            print("|    -----------------------------------------    |") # Adds lines between rows
-        print("|       A    B    C    D    E    F    G    H      |")
-        print("---------------------------------------------------")
-
-
     def valid_moves(self, current_row, current_col):
         """Calculates valid moves based on current position and board characteristics.
 
@@ -240,7 +217,7 @@ class ChessboardGUI:
         for r in range(2, 10):
             for c in range(2, 10):
                 if self.chessboard.board[r][c] != 0:
-                    x, y = (c - 2) * 50, (r - 2) * 50
+                    x, y = (c - 2) * 50, (9 - r) * 50 # Drawn board starts at 0 while matrix starts at 2, and tkinter orientation starts upper left.
                     self.canvas.create_text(x + 25, y + 25, text=str(self.chessboard.board[r][c]),
                                             font=("Helvetica", 10, "bold"), tags="knight")
 

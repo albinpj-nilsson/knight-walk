@@ -122,9 +122,6 @@ class Chessboard:
                 print(f"Invalid move: {sequence_of_moves[i + 1]}")
                 break
 
-class GUI:
-
-
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
 
