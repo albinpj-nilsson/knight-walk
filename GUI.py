@@ -8,6 +8,7 @@ __license__ = "CC0"
 import random
 import tkinter as tk
 from tkinter import ttk
+import time
 
 class Chessboard:
     """Builds functions for the chessboard and game logic for how the knight moves upon it.
@@ -52,7 +53,7 @@ class Chessboard:
 
 
 
-    def move_knight_random(self, start_row, start_column):
+    def move_knight_random(self, start_row, start_column, update_callback=None):
         """Moves the knight by checking that the move is valid, and ticks up a move counter.
         Alters board by adding this move counter to corresponding position.
 
@@ -63,6 +64,7 @@ class Chessboard:
         Returns:
             None
         """
+        self.__init__() # Clean board before proceeding
         move_number = 1
         self.board[start_row][start_column] = move_number # We represent the squares the knight has visited with its number
 
@@ -78,7 +80,11 @@ class Chessboard:
 
             start_row, start_column = chosen_move # The chosen move becomes input for the next loop
 
-    def move_knight_user_input(self, sequence_of_moves):
+            if update_callback:
+                update_callback(self.board)  # Call the callback function to update the GUI
+                time.sleep(0.3)  # Introduce a 0.3-second delay
+
+    def move_knight_user_input(self, sequence_of_moves, update_callback=None):
         """Moves the knight based on a sequence of moves given by user, given sequence is valid.
 
         Args:
@@ -86,6 +92,7 @@ class Chessboard:
 
         Returns:
             None"""
+        self.__init__()  # Clean board before proceeding
         move_number = 1
         start_row, start_column = sequence_of_moves[0]
         self.board[start_row][start_column] = move_number  # Map the first move
@@ -96,9 +103,15 @@ class Chessboard:
                 move_number += 1
                 start_row, start_column = sequence_of_moves[i + 1]  # Update to the next move
                 self.board[start_row][start_column] = move_number
+
+                if update_callback:
+                    update_callback(self.board)  # Call the callback function to update the GUI
+                    time.sleep(0.3)  # Introduce a 0.3-second delay
             else:
                 print(f"Invalid move: {sequence_of_moves[i + 1]}")
                 break
+
+
 
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
@@ -180,6 +193,23 @@ class ChessboardGUI:
                     col_name = chr(ord('A') + col)
                     self.canvas.create_text(x0 + 40, y0 + 40, text=col_name, font=("Helvetica", 8, "bold"))
 
+    def update_board(self, board):
+        """Updates the chessboard GUI based on the current state of the board.
+
+        Args:
+            board (list): The current state of the chessboard.
+
+        Returns:
+            None
+        """
+        self.canvas.delete("knight")
+        for r in range(2, 10):
+            for c in range(2, 10):
+                if board[r][c] != 0:
+                    x, y = (c - 2) * 50, (9 - r) * 50  # Drawn board starts at 0 while matrix starts at 2, and tkinter orientation starts upper left.
+                    self.canvas.create_text(x + 25, y + 25, text=str(board[r][c]),
+                                            font=("Helvetica", 10, "bold"), tags="knight")
+        self.master.update()
     def start_random_walk(self):
         """Starts a random walk of the knight on the chessboard. Based off of main in engine.
 
@@ -189,8 +219,7 @@ class ChessboardGUI:
         start_position = input("Type your starting square (e.g., E4): ")
         start_column = ord(start_position[0].upper()) - ord('A') + 2
         start_row = int(start_position[1]) + 1
-        self.chessboard.move_knight_random(start_row, start_column)
-        self.draw_knight_path()
+        self.chessboard.move_knight_random(start_row, start_column, self.update_board)
 
     def start_user_input(self):
         """Starts a knight's tour based on the user's input.
@@ -202,8 +231,7 @@ class ChessboardGUI:
         while True:
             next_move = input("Enter next move (e.g., D2) or type 'DONE' to finish: ")
             if next_move.upper() == "DONE":
-                self.chessboard.move_knight_user_input(move_sequence)
-                self.draw_knight_path()
+                self.chessboard.move_knight_user_input(move_sequence, self.update_board)
                 break
             move_sequence.append((int(next_move[1]) + 1, ord(next_move[0].upper()) - ord('A') + 2))
 
@@ -213,14 +241,14 @@ class ChessboardGUI:
         Returns:
             None
         """
-        self.canvas.delete("knight")
+        self.canvas.delete("knight") # Reset board
+
         for r in range(2, 10):
             for c in range(2, 10):
                 if self.chessboard.board[r][c] != 0:
                     x, y = (c - 2) * 50, (9 - r) * 50 # Drawn board starts at 0 while matrix starts at 2, and tkinter orientation starts upper left.
                     self.canvas.create_text(x + 25, y + 25, text=str(self.chessboard.board[r][c]),
                                             font=("Helvetica", 10, "bold"), tags="knight")
-
 
 def main():
     """The main function that initializes the chessboard and runs the GUI.
