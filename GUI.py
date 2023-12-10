@@ -34,6 +34,23 @@ def input(prompt=''):
 
     return userinput
 
+def print(prompt=''):
+    """This function overwrites the terminal input for the GUI"""
+    win= tk.Tk()
+
+    label= tk.Label(win, text=prompt)
+    label.pack()
+
+    # pressing the button should stop the mainloop
+    button= tk.Button(win, text="ok", command=win.quit)
+    button.pack()
+
+    # block execution until the user presses the OK button
+    win.mainloop()
+
+    # mainloop has ended. Read the value of the Entry, then destroy the GUI.
+    win.destroy()
+
 class Chessboard:
     """Builds functions for the chessboard and game logic for how the knight moves upon it.
 
@@ -130,7 +147,7 @@ class Chessboard:
             if not valid_moves:
                 break  # Exit loop when there are no more valid squares to visit
 
-            chosen_move = input("Give me your next move")
+            chosen_move = input("What is your next move?")
             chosen_start_column = ord(chosen_move[0].upper()) - ord('A') + 2
             chosen_start_row = int(chosen_move[1]) + 1
 
@@ -252,17 +269,17 @@ class ChessboardGUI:
         self.master.update()
 
     def start_random_walk(self):
-        # self.canvas.delete("knight")  # Reset board
+        self.canvas.delete("knight")  # Reset board
         self.create_input_entry("Random Walk", self.handle_random_walk)
 
     def start_user_input(self):
-        # self.canvas.delete("knight")  # Reset board
+        self.canvas.delete("knight")  # Reset board
         self.create_input_entry("Input Own Walk", self.handle_user_input)
 
     def create_input_entry(self, button_text, button_command):
         input_frame = ttk.Frame(self.master)
         input_frame.grid(row=0, column=2, padx=5, pady=5)
-        ttk.Label(input_frame, text=f"Enter moves for {button_text}:").pack(pady=5)
+        ttk.Label(input_frame, text=f"Enter starting square for {button_text}:").pack(pady=5)
         input_entry = tk.Entry(input_frame)
         input_entry.pack(pady=5)
         submit_button = ttk.Button(input_frame, text="Submit", command=lambda: button_command(input_entry.get()))
@@ -302,6 +319,7 @@ def main():
     root = tk.Tk()
     app = ChessboardGUI(root)
     root.mainloop()
+
 
 if __name__ == "__main__":
     main()
