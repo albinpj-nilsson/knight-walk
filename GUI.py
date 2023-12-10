@@ -85,34 +85,46 @@ class Chessboard:
                 update_callback(self.board)  # Call the callback function to update the GUI
                 time.sleep(0.3)  # Introduce a 0.3-second delay
 
-    def move_knight_user_input(self, chosen_move_row, chosen_move_column, update_callback=None):
+    def move_knight_INPUT_TEST(self, start_row, start_column, update_callback=None):
+        """Moves the knight by checking that the move is valid, and ticks up a move counter.
+        Alters board by adding this move counter to corresponding position.
+
+        Args:
+            start_row (int): Input row
+            start_column (int): Input column
+
+        Returns:
+            None
+        """
+        self.__init__()  # Clean board before proceeding
         move_number = 1
-        self.board[chosen_move_row][chosen_move_column] = move_number
-        if update_callback:
-            update_callback(self.board)
-            time.sleep(0.3)
+        self.board[start_row][start_column] = move_number  # We represent the squares the knight has visited with its number
 
         while True:
-            valid_moves = self.valid_moves(chosen_move_row, chosen_move_column)
+            valid_moves = self.valid_moves(start_row, start_column)
 
             if not valid_moves:
-                break
+                break  # Exit loop when there are no more valid squares to visit
 
-            input_text = yield  # Wait for user input
-            if not self.is_valid_square(input_text):
-                break
+            chosen_move = input("What is your next move?")
+            chosen_start_column = ord(chosen_move[0].upper()) - ord('A') + 2
+            chosen_start_row = int(chosen_move[1]) + 1
 
-            chosen_move_row = int(input_text[1]) + 1
-            chosen_move_column = ord(input_text[0].upper()) - ord('A') + 2
-
-            if (chosen_move_row, chosen_move_column) in valid_moves:
+            if (chosen_start_row, chosen_start_column) in valid_moves:
                 move_number += 1
-                self.board[chosen_move_row][chosen_move_column] = move_number
-                if update_callback:
-                    update_callback(self.board)
-                    time.sleep(0.3)
+                self.board[chosen_start_row][chosen_start_column] = move_number
             else:
+                translated = chr(ord("A") + (chosen_start_column - 2)) + str(chosen_start_row - 1) # Translates tuple to chessboard square
+                print(f"Invalid move: {translated}")
                 break
+
+            start_row = chosen_start_row
+            start_column = chosen_start_column # The chosen move becomes input for the next loop
+
+            if update_callback:
+                update_callback(self.board)  # Call the callback function to update the GUI
+                time.sleep(0.3)  # Introduce a 0.3-second delay
+
 
 #translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
                # print(f"Invalid move: {translated}")
@@ -216,12 +228,12 @@ class ChessboardGUI:
         self.master.update()
 
     def start_random_walk(self):
-        self.canvas.delete("knight")  # Reset board
+        # self.canvas.delete("knight")  # Reset board
         self.create_input_entry("Random Walk", self.handle_random_walk)
 
     def start_user_input(self):
-        self.canvas.delete("knight")  # Reset board
-        self.create_input_entry("Input Own Walk", self.handle_random_walk)
+        # self.canvas.delete("knight")  # Reset board
+        self.create_input_entry("Input Own Walk", self.handle_user_input)
 
     def create_input_entry(self, button_text, button_command):
         input_frame = ttk.Frame(self.master)
@@ -239,7 +251,10 @@ class ChessboardGUI:
         self.chessboard.move_knight_random(start_row, start_column, self.update_board)
 
     def handle_user_input(self, input_text):
-        pass
+        start_position = input_text.upper()
+        start_column = ord(start_position[0]) - ord('A') + 2
+        start_row = int(start_position[1]) + 1
+        self.chessboard.move_knight_INPUT_TEST(start_row, start_column, self.update_board)
 
     def draw_knight_path(self):
         """Draws the knight's path on the canvas.
