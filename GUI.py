@@ -291,24 +291,29 @@ class ChessboardGUI:
         self.master.update()
 
     def start_random_walk(self):
+        """Method that initializes the random walk"""
         self.canvas.delete("knight")  # Reset board
         self.handle_random_walk(Support.input("Enter starting square for Random Walk"))
         self.display_max_steps()
 
     def start_user_input(self):
+        """Method that initializes the user input walk"""
         self.canvas.delete("knight")  # Reset board
         self.handle_user_input(Support.input("Enter starting square for Input Own Walk"))
         self.display_max_steps()
 
     def handle_random_walk(self, input_text):
+        """Method that parses inputs and sends to logic for random walk"""
         start_column, start_row = parse_start_position(input_text)
         self.chessboard.move_knight_random(start_row, start_column, self.update_board)
 
     def handle_user_input(self, input_text):
+        """Method that parses inputs and sends to logic for user input walk"""
         start_column, start_row = parse_start_position(input_text)
         self.chessboard.move_knight_input(start_row, start_column, self.update_board)
 
     def display_max_steps(self):
+        """Method that prints the number of steps the knight takes"""
         max_steps = self.chessboard.max_steps
         Support.print(f"The knight took {max_steps} steps before stopping!")
         save_high_score(max_steps)
