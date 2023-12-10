@@ -74,6 +74,8 @@ class Chessboard:
             for c in range(2, 10):
                 self.board[r][c] = 0
 
+        self.max_steps = 0
+
     def valid_moves(self, current_row, current_col):
         """Calculates valid moves based on current position and board characteristics.
 
@@ -115,6 +117,7 @@ class Chessboard:
             valid_moves = self.valid_moves(start_row, start_column)
 
             if not valid_moves:
+                self.max_steps = move_number
                 break # Exit loop when there are no more valid squares to visit
 
             chosen_move = random.choice(valid_moves) # Randomly chooses a move from permitted moves
@@ -150,6 +153,7 @@ class Chessboard:
             valid_moves = self.valid_moves(start_row, start_column)
 
             if not valid_moves:
+                self.max_steps = move_number
                 break  # Exit loop when there are no more valid squares to visit
 
             chosen_move = Support.input(f"Input a square for move {move_number + 1}")
@@ -162,6 +166,7 @@ class Chessboard:
             else:
                 translated = chr(ord("A") + (chosen_start_column - 2)) + str(chosen_start_row - 1) # Translates tuple to chessboard square
                 Support.print(f"Invalid move: {translated}")
+                self.max_steps = move_number
                 break
 
             start_row = chosen_start_row
@@ -191,7 +196,7 @@ def save_high_score(steps):
         high_score = float('inf')
 
     if steps > high_score:
-        print(f"New high score! {steps} steps is higher than the previous high score of {high_score} steps.")
+        Support.print(f"New high score! {steps} steps is higher than the previous high score of {high_score} steps.")
         with open("high_score.txt", "w") as file:
             file.write(str(steps))
 
@@ -291,20 +296,13 @@ class ChessboardGUI:
 
     def start_random_walk(self):
         self.canvas.delete("knight")  # Reset board
-        self.create_input_entry("Random Walk", self.handle_random_walk)
+        self.handle_random_walk(Support.input("Enter starting square for Random Walk"))
+        self.display_max_steps()
 
     def start_user_input(self):
         self.canvas.delete("knight")  # Reset board
-        self.create_input_entry("Input Own Walk", self.handle_user_input)
-
-    def create_input_entry(self, button_text, button_command):
-        input_frame = ttk.Frame(self.master)
-        input_frame.grid(row=0, column=2, padx=5, pady=5)
-        ttk.Label(input_frame, text=f"Enter starting square for {button_text}:").pack(pady=5)
-        input_entry = tk.Entry(input_frame)
-        input_entry.pack(pady=5)
-        submit_button = ttk.Button(input_frame, text="Submit", command=lambda: button_command(input_entry.get()))
-        submit_button.pack(pady=5)
+        self.handle_user_input(Support.input("Enter starting square for Input Own Walk"))
+        self.display_max_steps()
 
     def handle_random_walk(self, input_text):
         start_column, start_row = parse_start_position(input_text)
@@ -313,6 +311,11 @@ class ChessboardGUI:
     def handle_user_input(self, input_text):
         start_column, start_row = parse_start_position(input_text)
         self.chessboard.move_knight_input(start_row, start_column, self.update_board)
+
+    def display_max_steps(self):
+        max_steps = self.chessboard.max_steps
+        Support.print(f"The knight took {max_steps} steps before stopping!")
+        save_high_score(max_steps)
 
     def draw_knight_path(self):
         """Draws the knight's path on the canvas.
@@ -336,6 +339,11 @@ def main():
     root = tk.Tk()
     app = ChessboardGUI(root)
     root.mainloop()
+
+    max_number_of_steps = max(max(row) for row in chessboard_gui.chessboard.board)
+    Support.print(f"The knight took {max_number_of_steps} steps before stopping!")
+
+    save_high_score(max_number_of_steps)
 
 
 if __name__ == "__main__":
