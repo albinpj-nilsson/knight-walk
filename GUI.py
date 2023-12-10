@@ -157,8 +157,7 @@ class Chessboard:
                 break  # Exit loop when there are no more valid squares to visit
 
             chosen_move = Support.input(f"Input a square for move {move_number + 1}")
-            chosen_start_column = ord(chosen_move[0].upper()) - ord('A') + 2
-            chosen_start_row = int(chosen_move[1]) + 1
+            chosen_start_column, chosen_start_row = parse_start_position(chosen_move)
 
             if (chosen_start_row, chosen_start_column) in valid_moves:
                 move_number += 1
@@ -175,10 +174,6 @@ class Chessboard:
             if update_callback:
                 update_callback(self.board)  # Call the callback function to update the GUI
                 time.sleep(0.3)  # Introduce a 0.3-second delay
-
-
-#translated = chr(ord("A") + (sequence_of_moves[i + 1][1] - 2)) + str(sequence_of_moves[i + 1][0] - 1) # Translates tuple to chessboard square
-               # print(f"Invalid move: {translated}")
 
 def save_high_score(steps):
     """Reads high_score.txt and writes the steps to it if steps surpass the current high score.
