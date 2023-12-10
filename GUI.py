@@ -10,6 +10,30 @@ import tkinter as tk
 from tkinter import ttk
 import time
 
+def input(prompt=''):
+    """This function overwrites the terminal input for the GUI"""
+    win= tk.Tk()
+
+    label= tk.Label(win, text=prompt)
+    label.pack()
+
+    userinput= tk.StringVar(win)
+    entry= tk.Entry(win, textvariable=userinput)
+    entry.pack()
+
+    # pressing the button should stop the mainloop
+    button= tk.Button(win, text="ok", command=win.quit)
+    button.pack()
+
+    # block execution until the user presses the OK button
+    win.mainloop()
+
+    # mainloop has ended. Read the value of the Entry, then destroy the GUI.
+    userinput= userinput.get()
+    win.destroy()
+
+    return userinput
+
 class Chessboard:
     """Builds functions for the chessboard and game logic for how the knight moves upon it.
 
@@ -106,7 +130,7 @@ class Chessboard:
             if not valid_moves:
                 break  # Exit loop when there are no more valid squares to visit
 
-            chosen_move = input("What is your next move?")
+            chosen_move = input("Give me your next move")
             chosen_start_column = ord(chosen_move[0].upper()) - ord('A') + 2
             chosen_start_row = int(chosen_move[1]) + 1
 
