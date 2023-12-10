@@ -13,7 +13,7 @@ import time
 class Support:
     """Class consisting of GUI support functions for I/O"""
     def input(prompt=''):
-        """This function overwrites the terminal input for the GUI"""
+        """This method overwrites the terminal input for the GUI"""
         win= tk.Tk()
 
         label= tk.Label(win, text=prompt)
@@ -37,7 +37,7 @@ class Support:
         return userinput
 
     def print(prompt=''):
-        """This function overwrites the terminal print for the GUI"""
+        """This method overwrites the terminal print for the GUI"""
         win= tk.Tk()
 
         label= tk.Label(win, text=prompt)
