@@ -16,8 +16,9 @@ The game has two main modes:
 - **Longest Route:** Find the longest possible path from a given starting position. This mode uses Warnsdorff's rule, a heuristic algorithm, to optimize the knight's journey.
 
 # Prerequisites
-Python 3.11 or later
-Tkinter library for GUI
+- Python 3.11 or later
+- Tkinter library for GUI
 
 # Result
+
 I received the highest grade for this work. Please read "specification.md" for further information (in Swedish).
