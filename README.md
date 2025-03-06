@@ -2,8 +2,12 @@
 
 Find out more about the problem here: [Knight's tour](https://en.wikipedia.org/wiki/Knight%27s_tour)
 
+
+
+
+
 Visualization of Knight's Tour
-![image](https://github.com/user-attachments/assets/78b8fa52-4c79-46db-bfd8-171de1abcd11)
+![Knight's_tour_anim_2](https://github.com/user-attachments/assets/a4eb9158-bb9e-4e0c-ab09-9084d82b4822)
 
 Knight's Tour
 
