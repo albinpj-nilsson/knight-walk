@@ -6,19 +6,18 @@ Find out more about the problem here: [Knight's tour](https://en.wikipedia.org/w
 
 ![Knight's_tour_anim_2](https://github.com/user-attachments/assets/a4eb9158-bb9e-4e0c-ab09-9084d82b4822)
 
-Knight's Tour
+# Description
 
-Description
-Knight's Tour is a chessboard game that allows you to explore and visualize the movements of a knight on a chessboard. The objective is to find the longest possible route for a knight, visiting each square only once.
+Knight's Tour is a chessboard puzzle that lets you explore and visualize a knight's movements. The goal is to find the longest possible path where the knight visits each square exactly once.  
 
-The game is divided into two main parts:
+The game has two main modes:  
 
-Create Route: Users can create their own path for the knight, giving them the freedom to explore different strategies.
-Longest Route: Discover the longest possible route a knight can take, given a starting position. The feature uses Warnsdorff's rule (a heuristic algorithm) to calculate the longest route.
-Read more about Warnsdorff's rule here: Warnsdorff's rule
+- **Create Route:** Design your own path for the knight, experimenting with different strategies.  
+- **Longest Route:** Find the longest possible path from a given starting position. This mode uses Warnsdorff's rule, a heuristic algorithm, to optimize the knight's journey.
 
-Prerequisites
+# Prerequisites
 Python 3.11 or later
 Tkinter library for GUI
 
+# Result
 I received the highest grade for this work. Please read "specification.md" for further information (in Swedish).
