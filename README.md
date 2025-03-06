@@ -3,6 +3,8 @@
 Find out more about the problem here: [Knight's tour](https://en.wikipedia.org/wiki/Knight%27s_tour)
 
 Visualization of Knight's Tour
+![image](https://github.com/user-attachments/assets/78b8fa52-4c79-46db-bfd8-171de1abcd11)
+
 Knight's Tour
 
 Description
